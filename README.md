@@ -4,7 +4,6 @@ This Helm chart to collect tcpdump from linux nodes and save it storage account
 
 # Install Chart
 
-Download the helm chart 
 ```bash
 wget https://github.com/amjadaljunaidi/tcpdump/blob/main/tcpdump-0.1.0.tgz
 gunzip tcpdump-0.1.0.tgz 
