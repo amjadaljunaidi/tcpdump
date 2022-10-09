@@ -2,7 +2,7 @@
 This Helm chart to collect tcpdump from linux nodes and save it storage account as Daemonset and it will keep running
 
 
-# Install Chart
+## Install Chart
 
 ```bash
 wget https://raw.githubusercontent.com/amjadaljunaidi/tcpdump/main/tcpdump-0.1.0.tgz
@@ -13,14 +13,14 @@ helm install tcpdump tcpdump --values  tcpdump/values.yaml --generate-name
 
 
 
-# Uninstall Chart
+## Uninstall Chart
 make sure to keep the pvc before deleting the chart
 ```bash
 kubectl patch pv <pvc_name>  -p "{\"spec\":{\"persistentVolumeReclaimPolicy\":\"Retain\"}}"
 helm uninstall tcpdump
 ```
 
-# Values
+## Values
 | Key | Type | Default |
 |-----|------|---------|
 | tcpReplica   |   int   |   15      |
