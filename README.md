@@ -2,7 +2,7 @@
 This Helm chart to collect tcpdump from linux nodes and save it storage account
 
 
-#Instaltion
+# tcpdump
 
 Download the helm chart ""
  - gunzip tcpdump-0.1.0.tgz 
