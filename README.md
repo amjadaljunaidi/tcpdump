@@ -5,9 +5,9 @@ This Helm chart to collect tcpdump from linux nodes and save it storage account
 # Install Chart
 
 ```bash
-wget https://github.com/amjadaljunaidi/tcpdump/blob/main/tcpdump-0.1.0.tgz
+wget https://raw.githubusercontent.com/amjadaljunaidi/tcpdump/main/tcpdump-0.1.0.tgz
 gunzip tcpdump-0.1.0.tgz 
-tar -xf tcpdump-0.1.0.tar 
+tar zxvf tcpdump-0.1.0.tgz
 helm install tcpdump --values  tcpdump/values.yaml --generate-name 
 ```
 # Values
