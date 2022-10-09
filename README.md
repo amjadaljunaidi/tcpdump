@@ -12,4 +12,8 @@ tar -xf tcpdump-0.1.0.tar
 helm install tcpdump --values  tcpdump/values.yaml --generate-name 
 ```
 # Values
-tcp
+| key | type | default |
+|-----|------|---------|
+|     |      |         |
+|     |      |         |
+|     |      |         | 
