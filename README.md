@@ -1,2 +1,4 @@
 # tcpdump
-this is to collect tcpdump from linux nodes
+This Helm chart to collect tcpdump from linux nodes and save it storage account
+
+
