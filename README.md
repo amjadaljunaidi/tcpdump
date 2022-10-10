@@ -8,7 +8,7 @@ This Helm chart to collect tcpdump from linux nodes and save it storage account 
 wget https://raw.githubusercontent.com/amjadaljunaidi/tcpdump/main/tcpdump-0.1.0.tgz
 gunzip tcpdump-0.1.0.tgz 
 tar zxvf tcpdump-0.1.0.tgz
-helm install tcpdump tcpdump --values  tcpdump/values.yaml --generate-name 
+helm install tcpdump tcpdump --values  tcpdump/values.yaml 
 ```
 
 
