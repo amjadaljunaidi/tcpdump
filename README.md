@@ -1,5 +1,5 @@
 # tcpdump
-This Helm chart to collect tcpdump from linux nodes and save it storage account as Daemonset and it will keep running
+This Helm chart to collect tcpdump from linux node/s and save it throw azure file share, by default will create Daemonset and will keep running, for more option please check the Values.
 
 
 ## Install Chart
