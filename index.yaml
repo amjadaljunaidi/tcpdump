@@ -8,6 +8,6 @@ entries:
     digest: 60dfad17eaf329f63739e65a06c9f90b08fe56167739112e748de7a2b5449d5e
     name: tcpdump
     urls:
-    - https://github.com/amjadaljunaidi/tcpdump.git/tcpdump-0.1.0.tgz
+    - https://amjadaljunaidi.github.io/tcpdump/tcpdump-0.1.0.tgz
     version: 0.1.0
 generated: "2022-10-11T12:03:58.4447411+03:00"
