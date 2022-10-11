@@ -1,0 +1,15 @@
+# Default values for kubecapture.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+tcpReplica: 15 
+src: empty
+dst: empty
+nodeSelector:
+  kubernetes.io/os: linux
+resources:
+  limits:
+    cpu: 100m
+    memory: 90Mi
+  requests:
+    cpu: 100m
+    memory: 90Mi

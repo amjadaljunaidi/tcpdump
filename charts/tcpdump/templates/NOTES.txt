@@ -1,0 +1,3 @@
+please check file are created in your storage account
+this will create 15 files of 500m for each node by default, those parmeters are adjustable ,rotating when the first one is full.
+when you want to stop the trace just remove the daemonset files will still be there -by helm uninstall {{ include "tcpdump.fullname" . }}

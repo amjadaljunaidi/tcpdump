@@ -1,0 +1,58 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  creationTimestamp: null
+  name: {{ include "tcpdump.fullname" . }}
+  labels:
+    {{- include "tcpdump.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "tcpdump.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        {{- include "tcpdump.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - command:
+        - bash
+        - -c
+        - |
+          mkdir -p /tmp/tcpdump && apt update && apt install tcpdump -y
+          {{- if and (eq .Values.src "empty") (eq .Values.dst "empty")}}
+          /usr/sbin/tcpdump -n -s 0 -C 500 -W {{.Values.tcpReplica}} -tttt  -w /tmp/tcpdump/"$NODE_NAME ""$(date +"%Y_%m_%d_%I_%M_%p").cap"
+          {{- else if and (.Values.src) (eq .Values.dst "empty") }}
+          /usr/sbin/tcpdump -n -s 0 -C 500 -W {{.Values.tcpReplica}} -tttt src {{.Values.src}} -w /tmp/tcpdump/"$NODE_NAME ""$(date +"%Y_%m_%d_%I_%M_%p").cap"
+          {{- else if and (eq .Values.src "empty") (.Values.dst) }}
+           /usr/sbin/tcpdump -n -s 0 -C 500 -W {{.Values.tcpReplica}} -tttt dst {{.Values.dst}} -w /tmp/tcpdump/"$NODE_NAME ""$(date +"%Y_%m_%d_%I_%M_%p").cap"
+          {{- else}}
+           /usr/sbin/tcpdump -n -s 0 -C 500 -W {{.Values.tcpReplica}} -tttt src {{.Values.src}} dst {{.Values.dst}} -w /tmp/tcpdump/"NODE_NAME ""$(date +"%Y_%m_%d_%I_%M_%p").cap"
+          {{- end }}
+        image: ubuntu:18.04
+        env:
+          - name: NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+        {{- if .Values.resources}}
+        resources: {{toYaml .Values.resources | nindent 12}}
+        {{- end }}
+        securityContext:
+          privileged: true
+        name:  {{ .Chart.Name }}
+        volumeMounts:
+          - mountPath: /tmp/tcpdump
+            name: tcpdump
+            readOnly: false
+      hostPID: true
+      hostNetwork: true
+    {{- if .Values.nodeSelector }}
+      nodeSelector: {{ toYaml .Values.nodeSelector | nindent 8 }}
+    {{- end }}
+      volumes:
+      - name: tcpdump
+        persistentVolumeClaim:
+          claimName: tcpdump
