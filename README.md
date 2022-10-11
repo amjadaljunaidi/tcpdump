@@ -6,6 +6,7 @@ This Helm chart to collect tcpdump from linux nodes and save it storage account 
 
 ```bash
 helm repo add tcpdump https://amjadaljunaidi.github.io/tcpdump/
+helm repo update
 helm install tcpdump tcpdump/tcpdump
 ```
 
