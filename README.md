@@ -31,3 +31,5 @@ helm uninstall tcpdump
 | resources.limits.memory    |  string    |    "90Mi"     |
 | resources.requests.cpu    |    string  |      "100m"   | 
 | resources.requests.memory    |  string    |    "90Mi"     |
+| customImage.enabled   | bool | false  |
+| customImage.image | string | ubuntu:18.04 |
