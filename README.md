@@ -10,7 +10,8 @@ helm repo update
 helm install tcpdump tcpdump/tcpdump
 ```
 
-
+### Using a custom image
+To use your own custom tcpdump image pass `--set customImage.enabled=true --set customImage.image=<your image>` to the helm install command.
 
 ## Uninstall Chart
 make sure to keep the pvc before deleting the chart
