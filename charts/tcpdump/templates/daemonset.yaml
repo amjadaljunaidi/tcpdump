@@ -17,21 +17,39 @@ spec:
         {{- include "tcpdump.selectorLabels" . | nindent 8 }}
     spec:
       containers:
+      {{- if .Values.customImage.enabled }}
       - command:
         - bash
         - -c
         - |
-          mkdir -p /tmp/tcpdump && apt update && apt install tcpdump -y
+          mkdir -p /root/tcpdump
           {{- if and (eq .Values.src "empty") (eq .Values.dst "empty")}}
-          /usr/sbin/tcpdump -n -s 0 -C 500 -W {{.Values.tcpReplica}} -tttt  -w /tmp/tcpdump/"$NODE_NAME ""$(date +"%Y_%m_%d_%I_%M_%p").cap"
+          /usr/sbin/tcpdump -n -s 0 -C 500 -W {{.Values.tcpReplica}} -tttt  -w /root/tcpdump/"$NODE_NAME ""$(date +"%Y_%m_%d_%I_%M_%p").cap"
           {{- else if and (.Values.src) (eq .Values.dst "empty") }}
-          /usr/sbin/tcpdump -n -s 0 -C 500 -W {{.Values.tcpReplica}} -tttt src {{.Values.src}} -w /tmp/tcpdump/"$NODE_NAME ""$(date +"%Y_%m_%d_%I_%M_%p").cap"
+          /usr/sbin/tcpdump -n -s 0 -C 500 -W {{.Values.tcpReplica}} -tttt src {{.Values.src}} -w /root/tcpdump/"$NODE_NAME ""$(date +"%Y_%m_%d_%I_%M_%p").cap"
           {{- else if and (eq .Values.src "empty") (.Values.dst) }}
-           /usr/sbin/tcpdump -n -s 0 -C 500 -W {{.Values.tcpReplica}} -tttt dst {{.Values.dst}} -w /tmp/tcpdump/"$NODE_NAME ""$(date +"%Y_%m_%d_%I_%M_%p").cap"
+           /usr/sbin/tcpdump -n -s 0 -C 500 -W {{.Values.tcpReplica}} -tttt dst {{.Values.dst}} -w /root/tcpdump/"$NODE_NAME ""$(date +"%Y_%m_%d_%I_%M_%p").cap"
           {{- else}}
-           /usr/sbin/tcpdump -n -s 0 -C 500 -W {{.Values.tcpReplica}} -tttt src {{.Values.src}} dst {{.Values.dst}} -w /tmp/tcpdump/"NODE_NAME ""$(date +"%Y_%m_%d_%I_%M_%p").cap"
+           /usr/sbin/tcpdump -n -s 0 -C 500 -W {{.Values.tcpReplica}} -tttt src {{.Values.src}} dst {{.Values.dst}} -w /root/tcpdump/"NODE_NAME ""$(date +"%Y_%m_%d_%I_%M_%p").cap"
+          {{- end }}
+        image: {{ .Values.customImage.image }}
+      {{ else }}
+      - command:
+        - bash
+        - -c
+        - |
+          mkdir -p /root/tcpdump && apt update && apt install tcpdump -y
+          {{- if and (eq .Values.src "empty") (eq .Values.dst "empty")}}
+          /usr/sbin/tcpdump -n -s 0 -C 500 -W {{.Values.tcpReplica}} -tttt  -w /root/tcpdump/"$NODE_NAME ""$(date +"%Y_%m_%d_%I_%M_%p").cap"
+          {{- else if and (.Values.src) (eq .Values.dst "empty") }}
+          /usr/sbin/tcpdump -n -s 0 -C 500 -W {{.Values.tcpReplica}} -tttt src {{.Values.src}} -w /root/tcpdump/"$NODE_NAME ""$(date +"%Y_%m_%d_%I_%M_%p").cap"
+          {{- else if and (eq .Values.src "empty") (.Values.dst) }}
+           /usr/sbin/tcpdump -n -s 0 -C 500 -W {{.Values.tcpReplica}} -tttt dst {{.Values.dst}} -w /root/tcpdump/"$NODE_NAME ""$(date +"%Y_%m_%d_%I_%M_%p").cap"
+          {{- else}}
+           /usr/sbin/tcpdump -n -s 0 -C 500 -W {{.Values.tcpReplica}} -tttt src {{.Values.src}} dst {{.Values.dst}} -w /root/tcpdump/"NODE_NAME ""$(date +"%Y_%m_%d_%I_%M_%p").cap"
           {{- end }}
         image: ubuntu:18.04
+        {{ end }}
         env:
           - name: NODE_NAME
             valueFrom:
@@ -44,7 +62,7 @@ spec:
           privileged: true
         name:  {{ .Chart.Name }}
         volumeMounts:
-          - mountPath: /tmp/tcpdump
+          - mountPath: /root/tcpdump
             name: tcpdump
             readOnly: false
       hostPID: true
@@ -55,4 +73,4 @@ spec:
       volumes:
       - name: tcpdump
         persistentVolumeClaim:
-          claimName: tcpdump
+          claimName: {{ include "tcpdump.fullname" . }}

@@ -15,7 +15,7 @@ helm install tcpdump tcpdump/tcpdump
 ## Uninstall Chart
 make sure to keep the pvc before deleting the chart
 ```bash
-kubectl patch pv <pvc_name>  -p "{\"spec\":{\"persistentVolumeReclaimPolicy\":\"Retain\"}}"
+kubectl patch pv <pv_name>  -p "{\"spec\":{\"persistentVolumeReclaimPolicy\":\"Retain\"}}"
 helm uninstall tcpdump
 ```
 

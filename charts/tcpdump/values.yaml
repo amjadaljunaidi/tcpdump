@@ -13,3 +13,6 @@ resources:
   requests:
     cpu: 100m
     memory: 90Mi
+customImage:
+  enabled: false
+  image: ubuntu:18.04
