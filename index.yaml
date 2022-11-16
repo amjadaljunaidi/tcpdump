@@ -2,12 +2,21 @@ apiVersion: v1
 entries:
   tcpdump:
   - apiVersion: v1
+    appVersion: "1.1"
+    created: "2022-11-16T16:31:57.791503749+03:00"
+    description: Tcpdump capture for all nodes or selected node/s
+    digest: 7b3e20da145a05f0d71c5644a9d6669da270ea6544ead4ca4c3d10dedb5d4043
+    name: tcpdump
+    urls:
+    - https://amjadaljunaidi.github.io/tcpdump/tcpdump-0.1.1.tgz/tcpdump-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
     appVersion: "1.0"
-    created: "2022-10-11T12:03:58.4507994+03:00"
+    created: "2022-11-16T16:31:57.783371749+03:00"
     description: Tcpdump capture for all nodes or selected node/s
     digest: 60dfad17eaf329f63739e65a06c9f90b08fe56167739112e748de7a2b5449d5e
     name: tcpdump
     urls:
-    - https://amjadaljunaidi.github.io/tcpdump/tcpdump-0.1.0.tgz
+    - https://amjadaljunaidi.github.io/tcpdump/tcpdump-0.1.1.tgz/tcpdump-0.1.0.tgz
     version: 0.1.0
-generated: "2022-10-11T12:03:58.4447411+03:00"
+generated: "2022-11-16T16:31:57.769945649+03:00"

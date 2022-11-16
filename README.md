@@ -10,12 +10,13 @@ helm repo update
 helm install tcpdump tcpdump/tcpdump
 ```
 
-
+### Using a custom image
+To use your own custom tcpdump image pass `--set customImage.enabled=true --set customImage.image=<your image>` to the helm install command.
 
 ## Uninstall Chart
 make sure to keep the pvc before deleting the chart
 ```bash
-kubectl patch pv <pvc_name>  -p "{\"spec\":{\"persistentVolumeReclaimPolicy\":\"Retain\"}}"
+kubectl patch pv <pv_name>  -p "{\"spec\":{\"persistentVolumeReclaimPolicy\":\"Retain\"}}"
 helm uninstall tcpdump
 ```
 
@@ -30,3 +31,5 @@ helm uninstall tcpdump
 | resources.limits.memory    |  string    |    "90Mi"     |
 | resources.requests.cpu    |    string  |      "100m"   | 
 | resources.requests.memory    |  string    |    "90Mi"     |
+| customImage.enabled   | bool | false  |
+| customImage.image | string | ubuntu:18.04 |
