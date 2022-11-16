@@ -7,7 +7,7 @@ This Helm chart to collect tcpdump from linux node/s and save it throw azure fil
 ```bash
 helm repo add tcpdump https://amjadaljunaidi.github.io/tcpdump/
 helm repo update
-helm install tcpdump tcpdump
+helm install tcpdump tcpdump/tcpdump
 ```
 
 ### Using a custom image
