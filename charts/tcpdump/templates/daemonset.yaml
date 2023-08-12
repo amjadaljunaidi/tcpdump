@@ -30,7 +30,7 @@ spec:
           {{- else if and (eq .Values.src "empty") (.Values.dst) }}
            /usr/sbin/tcpdump -n -s 0 -C 500 -W {{.Values.tcpReplica}} -tttt dst {{.Values.dst}} -w /root/tcpdump/"$NODE_NAME ""$(date +"%Y_%m_%d_%I_%M_%p").cap"
           {{- else}}
-           /usr/sbin/tcpdump -n -s 0 -C 500 -W {{.Values.tcpReplica}} -tttt src {{.Values.src}} dst {{.Values.dst}} -w /root/tcpdump/"NODE_NAME ""$(date +"%Y_%m_%d_%I_%M_%p").cap"
+           /usr/sbin/tcpdump -n -s 0 -C 500 -W {{.Values.tcpReplica}} -tttt src {{.Values.src}} and dst {{.Values.dst}} -w /root/tcpdump/"NODE_NAME ""$(date +"%Y_%m_%d_%I_%M_%p").cap"
           {{- end }}
         image: {{ .Values.customImage.image }}
       {{ else }}
