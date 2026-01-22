@@ -49,16 +49,25 @@ spec:
         - bash
         - -c
         - |
-          mkdir -p /root/tcpdump && apt update && apt install tcpdump -y
-          {{- if and (eq .Values.src "empty") (eq .Values.dst "empty")}}
-          /usr/sbin/tcpdump -n -s 0 -C 500 -W {{.Values.tcpReplica}} -tttt  -w /root/tcpdump/"$NODE_NAME ""$(date +"%Y_%m_%d_%I_%M_%p").cap"
-          {{- else if and (.Values.src) (eq .Values.dst "empty") }}
-          /usr/sbin/tcpdump -n -s 0 -C 500 -W {{.Values.tcpReplica}} -tttt src {{.Values.src}} -w /root/tcpdump/"$NODE_NAME ""$(date +"%Y_%m_%d_%I_%M_%p").cap"
-          {{- else if and (eq .Values.src "empty") (.Values.dst) }}
-           /usr/sbin/tcpdump -n -s 0 -C 500 -W {{.Values.tcpReplica}} -tttt dst {{.Values.dst}} -w /root/tcpdump/"$NODE_NAME ""$(date +"%Y_%m_%d_%I_%M_%p").cap"
-          {{- else}}
-           /usr/sbin/tcpdump -n -s 0 -C 500 -W {{.Values.tcpReplica}} -tttt src {{.Values.src}} and dst {{.Values.dst}} -w /root/tcpdump/"NODE_NAME ""$(date +"%Y_%m_%d_%I_%M_%p").cap"
-          {{- end }}
+        {{- $src := .Values.src }}
+          {{- $dst := .Values.dst }}
+
+          {{- if and (not $src) (not $dst) }}
+           /usr/sbin/tcpdump -n -s 0 -C 500 -W {{ .Values.tcpReplica }} -tttt \
+           -w "/root/tcpdump/$NODE_NAME $(date +\"%Y_%m_%d_%I_%M_%p\").cap"
+          {{- else if and $src (not $dst) }}
+           /usr/sbin/tcpdump -n -s 0 -C 500 -W {{ .Values.tcpReplica }} -tttt \
+          src {{ $src }} \
+          -w "/root/tcpdump/$NODE_NAME $(date +\"%Y_%m_%d_%I_%M_%p\").cap"
+          {{- else if and (not $src) $dst }}
+           /usr/sbin/tcpdump -n -s 0 -C 500 -W {{ .Values.tcpReplica }} -tttt \
+           dst {{ $dst }} \
+           -w "/root/tcpdump/$NODE_NAME $(date +\"%Y_%m_%d_%I_%M_%p\").cap"
+          {{- else }}
+           /usr/sbin/tcpdump -n -s 0 -C 500 -W {{ .Values.tcpReplica }} -tttt \
+              src {{ $src }} and dst {{ $dst }} \
+             -w "/root/tcpdump/$NODE_NAME $(date +\"%Y_%m_%d_%I_%M_%p\").cap"
+           {{- end }}
         image: ubuntu:18.04
         {{ end }}
         env:
