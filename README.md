@@ -24,8 +24,8 @@ helm uninstall tcpdump
 | Key | Type | Default |
 |-----|------|---------|
 | tcpReplica   |   int   |   15      |
-| src   |  int    |  empty means all sources, example x.x.x.x or FQDN     |
-| dst   |   int   |  empty means destinations, example x.x.x.x or FQDN    | 
+| src   |  string    |  ""     |
+| dst   |   string   |  ""    | 
 | nodeSelector  |   object   |   {"kubernetes.io/os":"linux"}      |
 | resources.limits.cpu    |   string   |     "100m"    | 
 | resources.limits.memory    |  string    |    "90Mi"     |
